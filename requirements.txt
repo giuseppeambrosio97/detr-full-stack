@@ -1,0 +1,6 @@
+gradio==4.8.0
+torch==2.1.1
+numpy
+matplotlib
+torchvision
+supervision==0.17.1
