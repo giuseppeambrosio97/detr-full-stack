@@ -1,5 +1,6 @@
 services:
   detr_cpu:
+    profiles: [ "cpu" ]
     build:
        context: .
     ports:
