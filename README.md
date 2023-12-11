@@ -1,5 +1,5 @@
 ---
-title: DETR (object detections & panoptic segmentation)
+title: DETR (object detection & panoptic segmentation)
 emoji: 🌭
 sdk: docker
 app_port: 7000
