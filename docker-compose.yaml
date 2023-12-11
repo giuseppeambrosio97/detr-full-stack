@@ -1,0 +1,25 @@
+services:
+  detr_cpu:
+    build:
+       context: .
+    ports:
+       - 7000:7000
+    volumes:
+       - ./data:/app/data
+  detr_gpu:
+    build:
+      dockerfile: Dockerfile.nvidia
+      target: app
+    profiles: [ "gpu" ]
+    shm_size: '4gb' # pytorch dataloader crash
+    ports:
+       - 7000:7000
+    volumes:
+       - ./data:/app/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]

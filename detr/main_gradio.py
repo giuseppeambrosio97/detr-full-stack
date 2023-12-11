@@ -42,11 +42,9 @@ with gr.Blocks() as inference_gradio:
 
             with gr.Row():
                 start_btn = gr.Button("Start", variant="primary")
-
         with gr.Column():
             annotated_img = gr.Image(label="Annotated Image")
             speed = gr.JSON(label="speed")
-            json_out = gr.JSON(label="output")
     examples = gr.Examples(
         examples=[
             [path]
@@ -59,7 +57,7 @@ with gr.Blocks() as inference_gradio:
     start_btn.click(
         fn=run_inference,
         inputs=[img_file, conf, model_name],
-        outputs=[annotated_img, speed, json_out],
+        outputs=[annotated_img, speed],
     )
 
 if __name__ == "__main__":
