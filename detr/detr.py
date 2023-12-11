@@ -1,12 +1,16 @@
 from functools import cache
+import io
+import itertools
 import torch
 import torchvision.transforms as T
 import os
 import numpy as np
+import seaborn as sns
 from torch import nn
 from torchvision.models import resnet50
-
-from supervision import Detections, BoxAnnotator
+from panopticapi.utils import id2rgb, rgb2id
+from supervision import Detections, BoxAnnotator, MaskAnnotator
+from PIL import Image
 
 torch.set_grad_enabled(False)
 
@@ -199,25 +203,37 @@ class SimpleDetr:
 class PanopticDetrResenet101:
     @cache
     def __init__(self):
-        model, postprocessor = torch.hub.load(
+        self.model, self.postprocessor = torch.hub.load(
             "facebookresearch/detr",
             "detr_resnet101_panoptic",
             pretrained=True,
             return_postprocessor=True,
             num_classes=250,
         )
-        model.eval()
+        self.model.eval()
 
     def detect(self, image, conf):
         # mean-std normalize the input image (batch-size: 1)
         img = normalize_img(image)
 
         outputs = self.model(img)
-        # keep only predictions with 0.7+ confidence
-        # compute the scores, excluding the "no-object" class (the last one)
-        scores = outputs["pred_logits"].softmax(-1)[..., :-1].max(-1)[0]
-        # threshold the confidence
-        keep = scores > conf
+        result = self.postprocessor(
+            outputs, torch.as_tensor(img.shape[-2:]).unsqueeze(0)
+        )[0]
+        print(result.keys())
+        palette = itertools.cycle(sns.color_palette())
+
+        # The segmentation is stored in a special-format png
+        panoptic_seg = Image.open(io.BytesIO(result["png_string"]))
+        panoptic_seg = np.array(panoptic_seg, dtype=np.uint8).copy()
+        # We retrieve the ids corresponding to each mask
+        panoptic_seg_id = rgb2id(panoptic_seg)
+
+        # Finally we color each mask individually
+        panoptic_seg[:, :, :] = 0
+        for id in range(panoptic_seg_id.max() + 1):
+            panoptic_seg[panoptic_seg_id == id] = np.asarray(next(palette)) * 255
+        return panoptic_seg
 
 
 # COCO classes

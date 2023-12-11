@@ -1,6 +1,8 @@
 import gradio as gr
 import supervision as sv
 import os
+from time import perf_counter
+
 from detr import SimpleDetr, PanopticDetrResenet101
 
 ASSETS_DIR = os.path.abspath(os.curdir) + "/data/assets"
@@ -10,15 +12,17 @@ print("Assets:", ASSETS_DIR)
 
 def run_inference(image, confidence, model_name, progress=gr.Progress(track_tqdm=True)):
     progress(0.1, "loading model..")
-
+    t0 = perf_counter()
     if model_name == "detr_demo_boxes":
         model = SimpleDetr()
     else:
         model = PanopticDetrResenet101()
+    t1 = perf_counter()
     progress(0.1, "Inference..")
 
     annotated_img = model.detect(image, confidence)
-    return annotated_img, None, None
+    t2 = perf_counter()
+    return annotated_img, {"load_model": t1 - t0, "inference": t2 - t1}, None
 
 
 with gr.Blocks() as inference_gradio:
@@ -47,7 +51,7 @@ with gr.Blocks() as inference_gradio:
         examples=[
             [path]
             for path in sv.list_files_with_extensions(
-                directory=ASSETS_DIR, extensions=["jpeg", "jpg"]
+                directory=ASSETS_DIR, extensions=["jpeg", "jpg", "png"]
             )
         ],
         inputs=[img_file],
