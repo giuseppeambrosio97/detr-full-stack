@@ -256,7 +256,7 @@ class SimpleDetrOnnx:
         onnx_sess_opts.enable_mem_pattern = True
         onnx_sess_opts.enable_cpu_mem_arena = True
         self.ort_session = onnxruntime.InferenceSession(
-            f"{ONNX_DIR}/detr_simple_demo.onnx",
+            f"{ONNX_DIR}/detr_simple_demo_onnx.onnx",
             sess_options=onnx_sess_opts,
             providers=[
                 "CUDAExecutionProvider",
