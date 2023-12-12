@@ -6,4 +6,4 @@ app_port: 7000
 pinned: true
 ---
 
-# Simple DETR gradio implementation (object detections & panoptic segmentation)
+# Simple DETR gradio implementation (object detection & panoptic segmentation)

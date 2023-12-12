@@ -6,3 +6,5 @@ torchvision
 supervision==0.17.1
 git+https://github.com/cocodataset/panopticapi.git
 seaborn
+onnx
+onnxruntime
