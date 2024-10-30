@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "detr"
+version = "0.1.0"
+description = "DETR app"
+authors = ["Giuseppe Ambrosio <giuambro97@gmail.com>"]
+readme = "README.md"
+packages = [{include = "detr"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+gradio = "^5.4.0"
+torch = "^2.5.1"
+numpy = "^2.1.2"
+matplotlib = "^3.9.2"
+torchvision = "^0.20.1"
+seaborn = "^0.13.2"
+onnx = "^1.17.0"
+onnxruntime = "^1.19.2"
+supervision = "0.21.0"
+panopticapi = {git = "https://github.com/cocodataset/panopticapi.git", rev = "7bb4655548f98f3fedc07bf37e9040a992b054b0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
