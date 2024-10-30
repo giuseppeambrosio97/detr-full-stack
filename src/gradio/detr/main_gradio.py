@@ -1,12 +1,13 @@
+from detr import ROOT_LOCATION
 import gradio as gr
 import supervision as sv
 import os
 from time import perf_counter
 
-from detr_models import SimpleDetr, PanopticDetrResenet101, SimpleDetrOnnx, ONNX_DIR
+from detr.detr_models import SimpleDetr, PanopticDetrResenet101, SimpleDetrOnnx, ONNX_DIR
 
-IMAGES_DIR = os.path.abspath(os.curdir) + "/data/images"
-ASSETS_DIR = os.path.abspath(os.curdir) + "/data/assets"
+IMAGES_DIR = ROOT_LOCATION / "data/images"
+ASSETS_DIR = ROOT_LOCATION / "data/assets"
 print("images:", IMAGES_DIR)
 
 

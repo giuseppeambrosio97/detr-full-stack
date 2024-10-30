@@ -1,6 +1,7 @@
 from functools import cache
 import io
 import itertools
+from detr import ROOT_LOCATION
 import torch
 import torchvision.transforms as T
 import os
@@ -21,9 +22,9 @@ torch.set_grad_enabled(False)
 # https://colab.research.google.com/github/facebookresearch/detr/blob/colab/notebooks/detr_demo.ipynb#scrollTo=cfCcEYjg7y46
 
 DETR_DEMO_WEIGHTS_URI = "https://dl.fbaipublicfiles.com/detr/detr_demo-da2a99e9.pth"
-TORCH_HOME = os.path.abspath(os.curdir) + "/data/cache"
-ONNX_DIR = os.path.abspath(os.curdir) + "/data/onnx"
-os.environ["TORCH_HOME"] = TORCH_HOME
+TORCH_HOME = ROOT_LOCATION / "data/cache"
+ONNX_DIR = ROOT_LOCATION / "data/onnx"
+os.environ["TORCH_HOME"] = TORCH_HOME.as_posix()
 
 Path(TORCH_HOME).mkdir(exist_ok=True)
 Path(ONNX_DIR).mkdir(exist_ok=True)
