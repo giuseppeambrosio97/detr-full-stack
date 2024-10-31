@@ -2,6 +2,7 @@ import logging
 import os
 from time import perf_counter
 
+from backend.core.exceptions import ModelNotExportedError
 import numpy as np
 from PIL import Image
 
@@ -13,12 +14,7 @@ from backend.core.detr_models import (
     SimpleDetrOnnx,
 )
 
-logger = logging.getLogger(__name__)
-
-class ModelNotExportedError(Exception):
-    def __init__(self, model_name: str) -> None:
-        super().__init__(f"Export is required for the model '{model_name}'.")
-    
+logger = logging.getLogger(__name__)    
 
 
 def inference(model_name: str, confidence: float, image: Image):

@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 
 import backend.services.inference as inference_svc
 from backend import IMAGES_DATA_LOCATION
-from backend.core.inference import ModelNotExportedError
+from backend.core.exceptions import ModelNotExportedError
 from backend.helpers.image import ImageDecodeError, ImageEncodeError
 from backend.models.inference import InferenceRequest, InferenceResponse
 
