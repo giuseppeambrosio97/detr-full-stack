@@ -15,6 +15,7 @@ import config from '@/config/config';
 import { Tooltip } from 'primereact/tooltip';
 import { Toast } from 'primereact/toast';
 import { Link } from 'react-router-dom';
+import ModelDropdown from '@/components/ModelDropdown';
 
 function InferencePage() {
     const imageInputRef = useRef<HTMLInputElement>(null);
@@ -175,21 +176,7 @@ function InferencePage() {
                     <div className="grid grid-cols-9 mt-4 w-full max-w-full gap-2">
                         <div className="col-span-4 flex flex-col justify-center gap-2">
                             <span className="pl-1">Model Selection:</span>
-                            <Dropdown
-                                value={modelName}
-                                onChange={(e) => setModelName(e.target.value)}
-                                options={[
-                                    'detr_simple_demo',
-                                    'detr_resnet101_panoptic',
-                                    'detr_simple_demo_onnx',
-                                ]}
-                                className="h-10 p-2 w-full shadow"
-                                pt={{
-                                    input: {
-                                        className: 'p-2 m-0 flex items-center justify-center',
-                                    },
-                                }}
-                            />
+                            <ModelDropdown modelName={modelName} onChange={setModelName} />
                         </div>
                         <div className="col-span-4 flex flex-col justify-center gap-2">
                             <span className="pl-1">Confidence:</span>
