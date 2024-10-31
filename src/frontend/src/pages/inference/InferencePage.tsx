@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+    getExampleImage,
     inference,
     inferenceExamples,
     TInferenceRequest,
@@ -9,7 +10,6 @@ import { Button } from 'primereact/button';
 import { InputNumber } from 'primereact/inputnumber';
 import { Image } from 'primereact/image';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { Dropdown } from 'primereact/dropdown';
 import { Messages } from 'primereact/messages';
 import config from '@/config/config';
 import { Tooltip } from 'primereact/tooltip';
@@ -52,8 +52,7 @@ function InferencePage() {
 
     const uploadExample = async (exampleImage: string) => {
         try {
-            const response = await fetch(`${config.backend.baseUrl}/images/${exampleImage}`);
-            const blob = await response.blob();
+            const blob = await getExampleImage(exampleImage);
             const base64Image = await convertFileToBase64(new File([blob], exampleImage));
             setUploadedImage(base64Image);
         } catch (error) {
@@ -135,7 +134,7 @@ function InferencePage() {
                         <>
                             <label className="flex flex-col items-center cursor-pointer w-full h-36">
                                 <div className="flex flex-col items-center text-center">
-                                    <i className="pi pi-cloud-upload text-6xl text-green-700"></i>
+                                    <i className="pi pi-cloud-upload text-6xl text-primary"></i>
                                     <span className="mt-2 text-lg">
                                         Drag and drop an image or click to select
                                     </span>
@@ -226,7 +225,7 @@ function InferencePage() {
                                         Object.entries(metrics).map(([key, value]) => (
                                             <li key={key} className="flex justify-between">
                                                 <span>{key}:</span>
-                                                <span>{value.toFixed(2)}</span>
+                                                <span>{value.toFixed(2)}ms</span>
                                             </li>
                                         ))}
                                 </ul>

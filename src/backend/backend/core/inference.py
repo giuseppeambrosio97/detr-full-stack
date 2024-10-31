@@ -9,7 +9,7 @@ from PIL import Image
 
 from backend import IMAGES_DATA_LOCATION
 from backend.core.detr_models import (
-    ONNX_DIR,
+    EXPORT_ONNX_DATA_LOCATION,
     PanopticDetrResenet101,
     SimpleDetr,
     SimpleDetrOnnx,
@@ -18,7 +18,7 @@ from backend.core.detr_models import (
 logger = logging.getLogger(__name__)    
 
 
-def inference(model_name: str, confidence: float, image: Image):
+def inference(model_name: ModelEnum, confidence: float, image: Image):
     if not image:
         raise ValueError("Image must be specified.")
 
@@ -33,7 +33,7 @@ def inference(model_name: str, confidence: float, image: Image):
         case ModelEnum.DETR_RESTNET101_PANOPTIC:
             model = PanopticDetrResenet101()
         case ModelEnum.DETR_SIMPLE_DEMO_ONNX:
-            if not os.path.exists(f"{ONNX_DIR}/detr_simple_demo_onnx.onnx"):
+            if not os.path.exists(f"{EXPORT_ONNX_DATA_LOCATION}/detr_simple_demo_onnx.onnx"):
                 raise ModelNotExportedError(model_name="detr_simple_demo_onnx")
             model = SimpleDetrOnnx()
         case _:

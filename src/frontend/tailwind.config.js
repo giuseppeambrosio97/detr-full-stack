@@ -10,6 +10,9 @@ export default {
       borderColor: {
         'primary-lighter': "#4CA1A9",
       },
+      textColor: {
+        'primary': "#006E7B",
+      }
     },
   },
   plugins: [],

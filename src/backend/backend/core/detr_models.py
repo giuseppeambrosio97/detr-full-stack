@@ -1,7 +1,7 @@
 from functools import cache
 import io
 import itertools
-from backend import ROOT_LOCATION
+from backend import EXPORT_ONNX_DATA_LOCATION, ROOT_LOCATION
 from backend.core.coco_classes import CLASSES
 import torch
 import torchvision.transforms as T
@@ -24,11 +24,9 @@ torch.set_grad_enabled(False)
 
 DETR_DEMO_WEIGHTS_URI = "https://dl.fbaipublicfiles.com/detr/detr_demo-da2a99e9.pth"
 TORCH_HOME = ROOT_LOCATION / "data/cache"
-ONNX_DIR = ROOT_LOCATION / "data/onnx"
 os.environ["TORCH_HOME"] = TORCH_HOME.as_posix()
 
 Path(TORCH_HOME).mkdir(exist_ok=True)
-Path(ONNX_DIR).mkdir(exist_ok=True)
 
 
 print("Torch home:", TORCH_HOME)
@@ -219,7 +217,7 @@ class SimpleDetr:
         return annotated
 
     def export(self):
-        model_path = f"{ONNX_DIR}/detr_simple_demo_onnx.onnx"
+        model_path = f"{EXPORT_ONNX_DATA_LOCATION}/detr_simple_demo_onnx.onnx"
         dummy_image = torch.ones(1, 3, 800, 800, device="cpu")
         input_names = ["inputs"]
         output_names = ["pred_logits", "pred_boxes"]
@@ -258,7 +256,7 @@ class SimpleDetrOnnx:
         onnx_sess_opts.enable_mem_pattern = True
         onnx_sess_opts.enable_cpu_mem_arena = True
         self.ort_session = onnxruntime.InferenceSession(
-            f"{ONNX_DIR}/detr_simple_demo_onnx.onnx",
+            f"{EXPORT_ONNX_DATA_LOCATION}/detr_simple_demo_onnx.onnx",
             sess_options=onnx_sess_opts,
             providers=[
                 "CUDAExecutionProvider",
@@ -349,7 +347,7 @@ class PanopticDetrResenet101:
         return panoptic_seg
 
     def export(self):
-        model_path = f"{ONNX_DIR}/detr_resnet101_panoptic.onnx"
+        model_path = f"{EXPORT_ONNX_DATA_LOCATION}/detr_resnet101_panoptic.onnx"
         dummy_image = torch.ones(1, 3, 800, 800, device="cpu")
         input_names = ["inputs"]
         output_names = ["pred_logits", "pred_boxes", "pred_masks"]

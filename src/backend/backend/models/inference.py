@@ -1,8 +1,9 @@
+from backend.core.model_enum import ModelEnum
 from pydantic import BaseModel, ConfigDict
 
 
 class InferenceRequest(BaseModel):
-    model_name: str
+    model_name: ModelEnum
     confidence: float = 0.5
     """Base64-encoded image"""
     image_base64: str
