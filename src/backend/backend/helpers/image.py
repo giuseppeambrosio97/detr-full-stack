@@ -26,7 +26,7 @@ def decode_image(image_base64: str) -> Image:
     try:
         image_bytes = base64.b64decode(image_base64)
         image = Image.open(BytesIO(image_bytes))
-        return image
+        return image.convert('RGB')
     except (binascii.Error, UnidentifiedImageError) as e:
         raise ImageDecodeError() from e
 
