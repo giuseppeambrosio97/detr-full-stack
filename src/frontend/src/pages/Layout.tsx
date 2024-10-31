@@ -13,7 +13,7 @@ export default function Layout() {
       </header>
 
       {/* Main content area */}
-      <main className="flex flex-col w-full mb-5">
+      <main className="flex flex-col w-full mb-1 scrollbar overflow-y-auto max-h-[90vh]">
         {/* Outlet renders the current route component */}
         <Outlet />
       </main>

@@ -1,4 +1,4 @@
-import { getAuthStateST } from "@/auth";
+// import { getAuthStateST } from "@/auth";
 import config from "@/config/config";
 import axios from "axios";
 
@@ -7,9 +7,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(config => {
-    const authState = getAuthStateST();
+    // const authState = getAuthStateST();
 
-    config.headers.Authorization = `Bearer ${authState.accessToken}`;
+    // config.headers.Authorization = `Bearer ${authState.accessToken}`;
     return config;
 }, error => {
     return Promise.reject(error);
