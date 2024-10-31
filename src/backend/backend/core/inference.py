@@ -3,6 +3,7 @@ import os
 from time import perf_counter
 
 from backend.core.exceptions import ModelNotExportedError
+from backend.core.model_enum import ModelEnum
 import numpy as np
 from PIL import Image
 
@@ -27,11 +28,11 @@ def inference(model_name: str, confidence: float, image: Image):
 
     model = None
     match model_name:
-        case "detr_simple_demo":
+        case ModelEnum.DETR_SIMPLE_DEMO:
             model = SimpleDetr()
-        case "detr_resnet101_panoptic":
+        case ModelEnum.DETR_RESTNET101_PANOPTIC:
             model = PanopticDetrResenet101()
-        case "detr_simple_demo_onnx":
+        case ModelEnum.DETR_SIMPLE_DEMO_ONNX:
             if not os.path.exists(f"{ONNX_DIR}/detr_simple_demo_onnx.onnx"):
                 raise ModelNotExportedError(model_name="detr_simple_demo_onnx")
             model = SimpleDetrOnnx()

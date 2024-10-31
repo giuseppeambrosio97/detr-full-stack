@@ -1,18 +1,28 @@
+import { modelList, ModelType } from '@/api/model-list';
 import { Dropdown } from 'primereact/dropdown';
+import { useEffect, useState } from 'react';
 
 type ModelDropdownProps = {
     modelName: string;
     onChange: (newModelName: string) => void;
+    modelType: ModelType;
 };
 
-const MODEL_NAMES = ['detr_simple_demo', 'detr_resnet101_panoptic', 'detr_simple_demo_onnx'];
-
 export default function ModelDropdown(props: ModelDropdownProps) {
+    const [models, setModels] = useState<string[]>([]);
+
+    useEffect(() => {
+        if(models.length === 0) {
+            modelList(props.modelType)
+            .then(data => setModels(data));
+        }
+    }, []);
+
     return (
         <Dropdown
             value={props.modelName}
             onChange={(e) => props.onChange(e.target.value)}
-            options={MODEL_NAMES}
+            options={models}
             className="h-10 p-2 w-full shadow"
             pt={{
                 input: {

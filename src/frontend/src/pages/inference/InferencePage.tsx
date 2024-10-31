@@ -124,7 +124,7 @@ function InferencePage() {
     };
 
     return (
-        <div className="w-full h-full px-8 py-4 flex flex-col items-center">
+        <div className="w-full h-full px-8 py-2 flex flex-col items-center">
             <Toast ref={toastRef} />
             <h2 className="text-center text-2xl mb-4">Model Inference</h2>
 
@@ -176,7 +176,7 @@ function InferencePage() {
                     <div className="grid grid-cols-9 mt-4 w-full max-w-full gap-2">
                         <div className="col-span-4 flex flex-col justify-center gap-2">
                             <span className="pl-1">Model Selection:</span>
-                            <ModelDropdown modelName={modelName} onChange={setModelName} />
+                            <ModelDropdown modelName={modelName} onChange={setModelName} modelType='inferable'/>
                         </div>
                         <div className="col-span-4 flex flex-col justify-center gap-2">
                             <span className="pl-1">Confidence:</span>
