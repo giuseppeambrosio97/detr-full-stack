@@ -5,10 +5,10 @@ services:
   backend:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
-
     build:
-      context: ".."
-      dockerfile: "docker/Dockerfile"
-
+      context: ..
+      dockerfile: docker/Dockerfile
     ports: # Used only locally
       - "8080:8080"
+    volumes:
+      - ../data:/app/data
