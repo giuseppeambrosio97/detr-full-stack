@@ -9,7 +9,7 @@ COPY ./pyproject.toml ./poetry.lock /tmp/
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes --without dev,test --without-urls
 
 # build
-FROM python:3.11-slim as build-stage
+FROM python:3.11 as build-stage
 WORKDIR /app
 
 ENV PIP_ROOT_USER_ACTION=ignore
