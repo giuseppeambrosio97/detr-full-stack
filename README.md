@@ -33,6 +33,7 @@ Simple DETR full stacl implementation (object detection & panoptic segmentation)
 
 ```text
 ├── README.md
+├── assets
 ├── infra
 │   └── docker-compose.yml
 └── src
